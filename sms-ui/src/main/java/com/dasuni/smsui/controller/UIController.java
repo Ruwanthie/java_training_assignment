@@ -23,9 +23,19 @@ public class UIController extends WebSecurityConfigurerAdapter {
         return "index";
     }
 
-    @RequestMapping(value = "/report")
-    public String loadReport(){
+    @RequestMapping(value = "/add")
+    public String addStudent(){
         return "home";
+    }
+
+    @RequestMapping(value = "/find")
+    public String findStudent(){
+        return "searchstd";
+    }
+
+    @RequestMapping(value = "/info")
+    public String allStudents(){
+        return "info";
     }
 }
 

@@ -5,9 +5,12 @@ import mainModule.modal.Student;
 import mainModule.modal.Telephone;
 import mainModule.service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +37,28 @@ public class StudentController {
         return studentService.save(student);
     }
 
+    @PutMapping("student/{id}")
+    public ResponseEntity<Student> update(@PathVariable Integer id, @Valid @RequestBody Student student) {
+        if (!studentService.findById(id).isPresent()) {
+            System.out.println("Id " + id + " is not existed");
+            ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(studentService.save(student));
+    }
+
+
+/*    @PutMapping("/student/{id}")
+    public Student updateNote(@PathVariable(value = "id") Integer studentId,
+                           @Valid @RequestBody Student studentDetails) {
+
+        Optional<Student> student = studentService.findById(studentId);
+
+        student.setName(studentDetails.getName());
+
+
+        return studentService.save(student);
+    }*/
    /* //to get the records - GET METHOD
     @RequestMapping(value = "/student", method = RequestMethod.GET)
     public Student getStudent(){
