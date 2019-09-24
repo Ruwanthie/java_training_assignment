@@ -1,8 +1,8 @@
 security:
   oauth2:
     client:
-      client-id: root
-      client-secret: pwd
+      client-id: mobile
+      client-secret: pin
       user-authorization-uri: http://localhost:8282/oauth/authorize
       access-token-uri: http://localhost:8282/oauth/token
     resource:
