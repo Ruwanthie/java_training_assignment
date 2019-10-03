@@ -29,7 +29,7 @@ public class StudentController {
 
     //To save the records to db - POST METHOD
     @RequestMapping(value = "/student", method = RequestMethod.POST)
-    public Student save(@RequestBody Student student){
+    public Student saveStudent(@RequestBody Student student){
 
         for (Telephone tel: student.getTelephoneList()) {
             tel.setStudent(student);
@@ -37,17 +37,25 @@ public class StudentController {
         return studentService.save(student);
     }
 
-    @PutMapping("student/{id}")
-    public ResponseEntity<Student> update(@PathVariable Integer id, @Valid @RequestBody Student student) {
-        if (!studentService.findById(id).isPresent()) {
-            System.out.println("Id " + id + " is not existed");
-            ResponseEntity.badRequest().build();
-        }
 
-        return ResponseEntity.ok(studentService.save(student));
+    @RequestMapping(value = "/student/{id}", method = RequestMethod.PUT)
+    public Student update(@RequestBody Student newStudent, @PathVariable Integer id) {
+
+        return studentService.findById(id)
+                .map(Student -> {
+                    Student.setName(newStudent.getName());
+                    Student.setAddress(newStudent.getAddress());
+                    Student.setTelephoneList(newStudent.getTelephoneList());
+                    for (Telephone tel: newStudent.getTelephoneList()) {
+                        tel.setStudent(newStudent);
+                    }
+                    return studentService.save(Student);
+                })
+                .orElseGet(() -> {
+                    newStudent.setSid(id);
+                    return studentService.save(newStudent);
+                });
     }
-
-
 /*    @PutMapping("/student/{id}")
     public Student updateNote(@PathVariable(value = "id") Integer studentId,
                            @Valid @RequestBody Student studentDetails) {
