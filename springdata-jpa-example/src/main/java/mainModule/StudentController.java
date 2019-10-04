@@ -1,8 +1,7 @@
 package mainModule;
 
-import mainModule.modal.Address;
-import mainModule.modal.Student;
-import mainModule.modal.Telephone;
+import com.dasuni.rentcloud.model.Student;
+import com.dasuni.rentcloud.model.Telephone;
 import mainModule.service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

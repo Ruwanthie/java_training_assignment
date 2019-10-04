@@ -1,7 +1,7 @@
 package com.dasuni.smsui.controller;
 
+import com.dasuni.rentcloud.model.Student;
 import com.dasuni.smsui.conf.AccessTokenConfigurer;
-import mainModule.modal.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
