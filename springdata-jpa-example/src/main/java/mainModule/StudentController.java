@@ -6,6 +6,7 @@ import mainModule.modal.Telephone;
 import mainModule.service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -29,6 +30,7 @@ public class StudentController {
 
     //To save the records to db - POST METHOD
     @RequestMapping(value = "/student", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ROLE_admin')")
     public Student saveStudent(@RequestBody Student student){
 
         for (Telephone tel: student.getTelephoneList()) {
@@ -39,6 +41,7 @@ public class StudentController {
 
 
     @RequestMapping(value = "/student/{id}", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('ROLE_admin')")
     public Student update(@RequestBody Student newStudent, @PathVariable Integer id) {
 
         return studentService.findById(id)
@@ -87,12 +90,14 @@ public class StudentController {
 
     //to fetch the all records - GET METHOD using jpa repository
     @RequestMapping(value = "/student", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_admin') or hasRole('ROLE_operator')")
     public List<Student> fetchAll(Optional<Integer> id){
         return studentService.findAll();
     }
 
     //to fetch a particular record by id - GET METHOD using jpa repository
     @RequestMapping(value = "/student/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_admin') or hasRole('ROLE_operator')")
     public Optional<Student> fetchAll(@PathVariable Integer id){
         return studentService.findById(id);
     }
